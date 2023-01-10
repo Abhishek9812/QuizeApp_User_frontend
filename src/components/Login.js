@@ -12,7 +12,7 @@ const Login = (props) => {
     const onFinish = async (values) => {
         console.log('Success:', values);
 
-        await axios.post(`${backendUrl}/logincustomer`, values)
+        await axios.post(`/api/v1/logincustomer`, values)
             .then((res) => {
 
                 console.log("Login Result:-> ", res);

@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Layout, Input, Space, Button, Tooltip, Checkbox, Col, Row, Divider, Modal } from 'antd';
+import { Layout, Input, Space, Button, Tooltip, Checkbox, Col, Row, Divider, Modal, Tag } from 'antd';
 import { collapseToast, toast } from 'react-toastify';
 import axios from 'axios';
 import backendUrl from './BackendUrl';
@@ -57,7 +57,7 @@ const Home = () => {
         }
 
         try {
-            await axios.post(`${backendUrl}/getTest`, data, {
+            await axios.post(`/api/v1/getTest`, data, {
                 headers: {
                     authorization: cookie.get('token', { path: '/' }),
                 }
@@ -125,22 +125,19 @@ const Home = () => {
             let ansArray = Array.from(ans[i]);
             console.log("AnsArray for check ", ansArray);
             console.log("Realans for check ", questions[i].correct);
-            if(ansArray.length === questions[i].correct.length){
+            if (ansArray.length === questions[i].correct.length) {
                 ansArray.sort();
                 questions[i].correct.sort();
                 let flag = true;
-                for(let j = 0 ;j < ansArray.length ;j++){
-                    if(ansArray[j] != questions[i].correct[j]){
+                for (let j = 0; j < ansArray.length; j++) {
+                    if (ansArray[j] != questions[i].correct[j]) {
                         flag = false;
                         break;
                     }
                 }
-                if(flag) score += 1;
+                if (flag) score += 5;
+                else{ score -= 2; }
             }
-            // if (ansArray == questions[i].correct) {
-            //     // setScore(score + 1);
-            //     score += 1;
-            // }
         }
         showModal();
     }
@@ -158,7 +155,7 @@ const Home = () => {
                     </Space.Compact>
 
                     <Modal title="Total Score" open={isModalOpen} onOk={handleOk} onCancel={handleCancel}>
-                        <h1>{score}/10</h1>
+                        <h1>{score}/50</h1>
 
                     </Modal>
 
@@ -169,7 +166,13 @@ const Home = () => {
                                 return (
                                     <>
                                         <li>
-                                            <h5>{item.title}</h5>
+                                            <h5>{item.title} <span>
+                                                {
+                                                    item.level <= 5 ? <Tag color='green' key={item._id}>Easy</Tag> :
+                                                        item.level > 5 && item.level <= 8 ? <Tag color='orange' key={item._id}>Medium</Tag> :
+                                                            <Tag color='red' key={item._id}>HARD</Tag>
+                                                }
+                                            </span></h5>
 
                                             <Checkbox.Group style={{ width: '100%' }} onChange={onChange}>
                                                 <Row>

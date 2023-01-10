@@ -23,7 +23,7 @@ const SignUp = () => {
             return;
         }
 
-        await axios.post(`${backendUrl}/signUpcustomer`, values)
+        await axios.post(`/api/v1/signUpcustomer`, values)
             .then((res) => {
                 console.log("Login Result:-> ", res);
                 if (res.data.code === 206) {
