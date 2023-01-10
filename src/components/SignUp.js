@@ -5,6 +5,8 @@ import backendUrl from './BackendUrl';
 import axios from 'axios';
 import { useHistory } from 'react-router-dom';
 
+const url = 'https://blue-violet-dalmatian-tux.cyclic.app/';
+
 const SignUp = () => {
     const history = useHistory();
     const onFinish = async (values) => {
@@ -23,7 +25,7 @@ const SignUp = () => {
             return;
         }
 
-        await axios.post(`/api/v1/signUpcustomer`, values)
+        await axios.post(`${url}api/v1/signUpcustomer`, values)
             .then((res) => {
                 console.log("Login Result:-> ", res);
                 if (res.data.code === 206) {

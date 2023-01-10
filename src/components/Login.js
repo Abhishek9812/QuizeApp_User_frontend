@@ -6,13 +6,15 @@ import Cookies from 'universal-cookie';
 import axios from 'axios';
 import { useHistory } from 'react-router-dom';
 
+const url = 'https://blue-violet-dalmatian-tux.cyclic.app/';
+
 const Login = (props) => {
     const history = useHistory();
     const cookie = new Cookies();
     const onFinish = async (values) => {
         console.log('Success:', values);
 
-        await axios.post(`/api/v1/logincustomer`, values)
+        await axios.post(`${url}api/v1/logincustomer`, values)
             .then((res) => {
 
                 console.log("Login Result:-> ", res);

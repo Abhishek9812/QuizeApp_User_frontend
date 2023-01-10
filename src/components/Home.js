@@ -9,6 +9,8 @@ import { Footer } from 'antd/es/layout/layout';
 
 
 const { Content } = Layout;
+const url = 'https://blue-violet-dalmatian-tux.cyclic.app/';
+
 
 var score = 0;
 
@@ -57,7 +59,7 @@ const Home = () => {
         }
 
         try {
-            await axios.post(`/api/v1/getTest`, data, {
+            await axios.post(`${url}/api/v1/getTest`, data, {
                 headers: {
                     authorization: cookie.get('token', { path: '/' }),
                 }
